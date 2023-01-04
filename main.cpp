@@ -6,12 +6,23 @@ using namespace std;
 
 #include <mytime.h>
 
+class my_inotify:public zr_inotify{
+public:
+    my_inotify(char *path) : zr_inotify(path) {
+        printf("son\n");
+    }
+protected:
+    int func_moveto(file_stat st, char *path) override {
+        printf("my   !!!!!!!!!!!!\n");
+        return zr_inotify::func_moveto(st, path);
+    }
+};
+
 int main() {
-    map<int,int> m;
+
     clock_t t=clock();
-    zr_inotify z= zr_inotify("/home/zr/test");
-    z.readinotify();
+    my_inotify z("/home/zr/test");
 
-
+    z.startinotify();
 
 }
